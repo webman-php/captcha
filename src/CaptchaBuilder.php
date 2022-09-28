@@ -415,7 +415,7 @@ class CaptchaBuilder implements CaptchaBuilderInterface
         }
 
         if ($font === null) {
-            $font = __DIR__ . '/Font/captcha'.$this->rand(0, 5).'.ttf';
+            $font = $this->getFontPath(__DIR__ . '/Font/captcha'.$this->rand(0, 5).'.ttf');
         }
 
         if (empty($this->backgroundImages)) {
@@ -488,6 +488,27 @@ class CaptchaBuilder implements CaptchaBuilderInterface
         $this->contents = $image;
 
         return $this;
+    }
+
+    /**
+     * @param $font
+     * @return string
+     */
+    protected function getFontPath($font)
+    {
+        static $fontPathMap = [];
+        if (!\class_exists(\Phar::class, false) || !\Phar::running()) {
+            return $font;
+        }
+
+        $tmpPath = sys_get_temp_dir() ?: '/tmp';
+        $filePath = "$tmpPath/" . basename($font);
+        clearstatcache();
+        if (!isset($fontPathMap[$font]) || !is_file($filePath)) {
+            file_put_contents($filePath, file_get_contents($font));
+            $fontPathMap[$font] = $filePath;
+        }
+        return $fontPathMap[$font];
     }
 
     /**
