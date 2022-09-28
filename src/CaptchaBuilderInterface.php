@@ -1,6 +1,6 @@
 <?php
 
-namespace Gregwar\Captcha;
+namespace Webman\Captcha;
 
 /**
  * A Captcha builder

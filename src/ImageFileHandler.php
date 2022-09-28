@@ -1,8 +1,6 @@
 <?php
 
-namespace Gregwar\Captcha;
-
-use Symfony\Component\Finder\Finder;
+namespace Webman\Captcha;
 
 /**
  * Handles actions related to captcha image files including saving and garbage collection
@@ -66,31 +64,6 @@ class ImageFileHandler
         imagejpeg($contents, $filePath, 15);
 
         return '/' . $this->imageFolder . '/' . $filename;
-    }
-
-    /**
-     * Randomly runs garbage collection on the image directory
-     *
-     * @return bool
-     */
-    public function collectGarbage()
-    {
-        if (!mt_rand(1, $this->gcFreq) == 1) {
-            return false;
-        }
-
-        $this->createFolderIfMissing();
-
-        $finder = new Finder();
-        $criteria = sprintf('<= now - %s minutes', $this->expiration);
-        $finder->in($this->webPath . '/' . $this->imageFolder)
-            ->date($criteria);
-
-        foreach ($finder->files() as $file) {
-            unlink($file->getPathname());
-        }
-
-        return true;
     }
 
     /**

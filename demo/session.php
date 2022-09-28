@@ -5,7 +5,7 @@ session_start();
 // Including the autoload (you need to composer install in the main directory)
 require_once __DIR__.'/../vendor/autoload.php';
 
-use Gregwar\Captcha\CaptchaBuilder;
+use Webman\Captcha\CaptchaBuilder;
 
 // Creating the captcha instance and setting the phrase in the session to store
 // it for check when the form is submitted
