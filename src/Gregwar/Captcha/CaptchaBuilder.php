@@ -341,12 +341,12 @@ class CaptchaBuilder implements CaptchaBuilderInterface
         }
 
         // Gets the text size and start position
-        $size = $width / $length - $this->rand(0, 3) - 1;
+        $size = intval($width / $length) - $this->rand(0, 3) - 1;
         $box = \imagettfbbox($size, 0, $font, $phrase);
         $textWidth = $box[2] - $box[0];
         $textHeight = $box[1] - $box[7];
-        $x = ($width - $textWidth) / 2;
-        $y = ($height - $textHeight) / 2 + $size;
+        $x = intval(($width - $textWidth) / 2);
+        $y = intval(($height - $textHeight) / 2) + $size;
 
         if (!$this->textColor) {
             $textColor = array($this->rand(0, 150), $this->rand(0, 150), $this->rand(0, 150));
@@ -605,7 +605,7 @@ class CaptchaBuilder implements CaptchaBuilderInterface
             $value = current($this->fingerprint);
             next($this->fingerprint);
         } else {
-            $value = mt_rand($min, $max);
+            $value = mt_rand(intval($min), intval($max));
             $this->fingerprint[] = $value;
         }
 
