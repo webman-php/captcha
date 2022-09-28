@@ -1,11 +1,14 @@
 {
-    "name": "gregwar/captcha",
+    "name": "webman/captcha",
     "type": "library",
     "description": "Captcha generator",
     "keywords": ["captcha", "spam", "bot"],
-    "homepage": "https://github.com/Gregwar/Captcha",
     "license": "MIT",
     "authors": [
+        {
+            "name": "walkor",
+            "email": "walkor@workerman.net"
+        },
         {
             "name": "Grégoire Passault",
             "email": "g.passault@gmail.com",
@@ -24,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Gregwar\\": "src/Gregwar"
+            "Webman\\": "src"
         }
     },
     "require-dev": {
