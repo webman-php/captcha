@@ -14,6 +14,11 @@ use \Exception;
 class CaptchaBuilder implements CaptchaBuilderInterface
 {
     /**
+     * @var int|bool
+     */
+    public $background;
+
+    /**
      * @var array
      */
     protected $fingerprint = array();
