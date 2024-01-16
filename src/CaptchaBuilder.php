@@ -501,18 +501,24 @@ class CaptchaBuilder implements CaptchaBuilderInterface
      * @param $font
      * @return string
      */
-    protected function getFontPath($font)
+    protected function getFontPath($font, $prefix = 0)
     {
         static $fontPathMap = [];
         if (!\class_exists(\Phar::class, false) || !\Phar::running()) {
             return $font;
         }
 
+        $fileName = ($prefix ? "$prefix-" : '') . basename($font);
         $tmpPath = sys_get_temp_dir() ?: '/tmp';
-        $filePath = "$tmpPath/" . basename($font);
+        $filePath = "$tmpPath/" . $fileName;
         clearstatcache();
-        if (!isset($fontPathMap[$font]) || !is_file($filePath)) {
+        if (!is_file($filePath)) {
             file_put_contents($filePath, file_get_contents($font));
+        }
+        if (!is_readable($filePath)){
+          return $this->getFontPath($font, $prefix+1);
+        }
+        if (!isset($fontPathMap[$font]) ) {
             $fontPathMap[$font] = $filePath;
         }
         return $fontPathMap[$font];
