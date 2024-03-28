@@ -509,6 +509,12 @@ class CaptchaBuilder implements CaptchaBuilderInterface
         }
 
         $tmpPath = sys_get_temp_dir() ?: '/tmp';
+        if (function_exists('runtime_path')) {
+            $tmpPath = runtime_path('tmp');
+            if (!is_dir($tmpPath)) {
+                mkdir($tmpPath, 0777, true);
+            }
+        }
         $filePath = "$tmpPath/" . basename($font);
         clearstatcache();
         if (!isset($fontPathMap[$font]) || !is_file($filePath)) {
